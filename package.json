@@ -21,6 +21,6 @@
   },
   "homepage": "https://github.com/SuAutumn/node#readme",
   "devDependencies": {
-    "request": "^2.83.0"
+    "axios": "^0.17.1"
   }
 }
