@@ -1,18 +1,17 @@
-const express = require('express');
-const webpack = require('webpack');
-const webpackDevMiddleware = require('webpack-dev-middleware');
-
-const app = express();
-const config = require('./config/webpack.config.js');
-const compiler = webpack(config);
-
-// Tell express to use the webpack-dev-middleware and use the webpack.config.js
-// configuration file as a base.
-app.use(webpackDevMiddleware(compiler, {
-  publicPath: config.output.publicPath
-}));
-
-// Serve the files on port 3000.
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!\n');
-});
+const createApp = require('./built-server-bundle.js')
+server.get('*', (req, res) => {
+  const context = { url: req.url }
+  createApp(context).then(app => {
+    renderer.renderToString(app, (err, html) => {
+      if (err) {
+        if (err.code === 404) {
+          res.status(404).end('Page not found')
+        } else {
+          res.status(500).end('Internal Server Error')
+        }
+      } else {
+        res.end(html)
+      }
+    })
+  })
+})

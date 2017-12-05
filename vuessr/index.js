@@ -4,7 +4,6 @@ const renderer = require('vue-server-renderer').createRenderer({
   template: require('fs').readFileSync('index.tmp.html', 'utf-8')
 })
 const createApp = require('./app')
-console.log(createApp)
 
 server.get('*', (req, res) => {
   const context = {

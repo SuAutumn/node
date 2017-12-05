@@ -9,6 +9,7 @@ function resolve (dir) {
 }
 
 module.exports = {
+  // 当前根目录环境
   context: path.resolve(__dirname, '../'),
   // file entry
   entry: {

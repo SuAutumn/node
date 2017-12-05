@@ -7,7 +7,7 @@ export function createRouter () {
     mode: 'history',
     routes: [
       // todo add route
-      {paht: '/', component: () => import('./components/Home.vue')}
+      {paht: '/', component: () => import('./src/components/Home.vue')}
     ]
   })
 }
