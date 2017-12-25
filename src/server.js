@@ -1,9 +1,14 @@
 // const createApp = require('./entry-server.js')
 const path = require('path')
+
+function resolve(filename) {
+  return path.resolve(__dirname, filename)
+}
+
 const { createBundleRenderer } = require('vue-server-renderer')
-const serverBundle = require('./dist/vue-ssr-server-bundle.json')
-const clientManifest = require('./dist/vue-ssr-client-manifest.json')
-const template = require('fs').readFileSync(path.resolve(__dirname, './index.template.html'), 'utf-8')
+const serverBundle = require(resolve('./dist/vue-ssr-server-bundle.json'))
+const clientManifest = require(resolve('./dist/vue-ssr-client-manifest.json'))
+const template = require('fs').readFileSync(resolve('./index.template.html'), 'utf-8')
 const renderer = createBundleRenderer(serverBundle, {
   runInNewContext: false,
   template,
