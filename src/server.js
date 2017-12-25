@@ -1,8 +1,9 @@
 // const createApp = require('./entry-server.js')
+const path = require('path')
 const { createBundleRenderer } = require('vue-server-renderer')
 const serverBundle = require('./dist/vue-ssr-server-bundle.json')
 const clientManifest = require('./dist/vue-ssr-client-manifest.json')
-const template = require('fs').readFileSync('./index.template.html', 'utf-8')
+const template = require('fs').readFileSync(path.resolve(__dirname, './index.template.html'), 'utf-8')
 const renderer = createBundleRenderer(serverBundle, {
   runInNewContext: false,
   template,
@@ -13,7 +14,10 @@ const server = require('express')()
 // console.log(createApp)
 
 server.get('*', (req, res) => {
-  const context = { url: req.url }
+  const context = {
+    url: req.url,
+    title: '运营平台'
+  }
   renderer.renderToString(context, (err, html) => {
     if (err) {
       if (err.code === 404) {
