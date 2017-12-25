@@ -7,9 +7,10 @@ module.exports = {
   context: path.resolve(__dirname),
   entry: './entry-server.js',
   target: 'node',
-  devtool: 'source-map',
+  devtool: '#source-map',
   output: {
     filename: 'server-bundle.js',
+    publicPath: '/dist/',
     path: path.resolve(__dirname, 'dist'),
     libraryTarget: 'commonjs2'
   },

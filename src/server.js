@@ -11,12 +11,16 @@ const clientManifest = require(resolve('./dist/vue-ssr-client-manifest.json'))
 const template = require('fs').readFileSync(resolve('./index.template.html'), 'utf-8')
 const renderer = createBundleRenderer(serverBundle, {
   runInNewContext: false,
+  basedir: resolve('./dist'),
   template,
   clientManifest
 })
 // const renderer = require('vue-server-renderer').createRenderer()
-const server = require('express')()
+const express = require('express')
+const server = express()
 // console.log(createApp)
+
+server.use('/dist', express.static(resolve('./dist')))
 
 server.get('*', (req, res) => {
   const context = {

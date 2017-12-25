@@ -9,12 +9,13 @@ module.exports = {
   devtool: '#cheap-module-source-map',
   output: {
     filename: '[name].[chunkhash:3].js',
+    publicPath: '/dist/',
     path: path.resolve(__dirname, 'dist')
   },
   plugins: [
     new CleanWebpackPlugin(['dist']),
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'mainfest',
+      name: 'manifest',
       minChunks: Infinity
     }),
     new VueSSRClientPlugin()

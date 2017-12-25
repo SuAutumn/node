@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     getToken () {
-
+      alert(this.username + ' ' + this.password)
     }
   }
 }
