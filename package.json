@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "vue-bundle": "npm run vue-client-bundle && npm run vue-server-bundle",
     "vue-server-bundle": "webpack --config ./src/webpack.server.config.js",
     "vue-client-bundle": "webpack --config ./src/webpack.client.config.js"
   },
