@@ -24,13 +24,17 @@ class ApiConfig extends EventEmitter {
 }
 
 class User extends ApiConfig {
-  constructor(name, password) {
+  constructor(name, password, domain) {
     super()
     this.userName = name
     this.password = password
     this.orgId = ''
     this.userId = ''
-    this.getTokenByGlobal()
+    if (domain) {
+      this.getTokenByDomain()
+    } else {
+      this.getTokenByGlobal()
+    }
   }
 
   getTokenByGlobal () {
@@ -49,9 +53,32 @@ class User extends ApiConfig {
         this.userId = res.data.userId
         this.emit('tokenDone') // 获取token完成
       })
+      .catch(err => {
+        console.log(err.response.data.error)
+      })
   }
   // todo: 需要输入域名的接口
-  getTokenByDomain () {}
+  getTokenByDomain () {
+    let url = 'users/tokens'
+    let data = {
+      deviceId: '',
+      isCheck: 1,
+      nb: 1,
+      password: (new Buffer(this.password)).toString('base64'),
+      userName: (new Buffer(this.userName)).toString('base64'),
+      domainName: this.domainName
+    }
+    axios.post(url, data, this.axiosConfig)
+      .then(res => {
+        this.axiosConfig.headers['token'] = res.data.token
+        this.orgId = res.data.orgId
+        this.userId = res.data.userId
+        this.emit('tokenDone') // 获取token完成
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
 }
 
 class Plan extends EventEmitter {
@@ -215,20 +242,23 @@ class PushStudy extends EventEmitter {
   }
 }
 
-const user = new User('', '')
+const user = new User('admin', '111111')
 user.on('tokenDone', () => {
-  user.removeAllListeners('tokenDone')
-
-  // 获取计划
-  const plan = new Plan(user)
-
-  plan.on('planListDone', () => {
-    plan.removeAllListeners('planListDone')
-    // 获取第二个计划知识列表
-    plan.getKngList(plan.list[0]['id'])
-    plan.on('kngListDone', () => {
-      plan.removeAllListeners('kngListDone')
-      plan.getNextStudy(PushStudy)
-    })
-  })
+  console.log(user)
 })
+// user.on('tokenDone', () => {
+//   user.removeAllListeners('tokenDone')
+
+//   // 获取计划
+//   const plan = new Plan(user)
+
+//   plan.on('planListDone', () => {
+//     plan.removeAllListeners('planListDone')
+//     // 获取第二个计划知识列表
+//     plan.getKngList(plan.list[0]['id'])
+//     plan.on('kngListDone', () => {
+//       plan.removeAllListeners('kngListDone')
+//       plan.getNextStudy(PushStudy)
+//     })
+//   })
+// })

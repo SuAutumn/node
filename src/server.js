@@ -20,7 +20,8 @@ const express = require('express')
 const server = express()
 // console.log(createApp)
 
-server.use('/dist', express.static(resolve('./dist')))
+server.use('/dist', express.static(resolve('./dist'))) // webpack打包文件
+server.use('/static', express.static(resolve('./static'))) // 样式文件
 
 server.get('*', (req, res) => {
   const context = {

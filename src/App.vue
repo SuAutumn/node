@@ -1,6 +1,5 @@
 <template>
-  <div id="app">
-    this is app vue
+  <div id="app" class="page-bg">
     <router-view></router-view>
   </div>
 </template>
