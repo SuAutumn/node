@@ -37,13 +37,13 @@
 export default {
   data() {
     return {
-      username: "",
-      password: ""
+      username: '',
+      password: ''
     };
   },
   methods: {
     login() {
-      alert(this.username + " " + this.password);
+      
     }
   }
 };
