@@ -5,7 +5,9 @@ const path = require('path')
 
 module.exports = {
   context: path.resolve(__dirname),
-  entry: './entry-client.js',
+  entry: {
+    app: './entry-client.js'
+  },
   devtool: '#cheap-module-source-map',
   output: {
     filename: '[name].[chunkhash:3].js',
